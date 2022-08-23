@@ -2,8 +2,11 @@ package deyki.FastTrade.service.impl;
 
 import deyki.FastTrade.domain.bindingModels.NewUsernameBindingModel;
 import deyki.FastTrade.domain.bindingModels.UserBindingModel;
+import deyki.FastTrade.domain.bindingModels.UserProfileDetailsBindingModel;
 import deyki.FastTrade.domain.entity.User;
+import deyki.FastTrade.domain.entity.UserProfileDetails;
 import deyki.FastTrade.domain.responseModels.SignInResponseModel;
+import deyki.FastTrade.repository.UserProfileDetailsRepository;
 import deyki.FastTrade.repository.UserRepository;
 import deyki.FastTrade.security.JWTUtil;
 import deyki.FastTrade.service.UserService;
@@ -24,13 +27,15 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserProfileDetailsRepository userProfileDetailsRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ModelMapper modelMapper;
     private final JWTUtil jwtUtil;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ModelMapper modelMapper, JWTUtil jwtUtil) {
+    public UserServiceImpl(UserRepository userRepository, UserProfileDetailsRepository userProfileDetailsRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ModelMapper modelMapper, JWTUtil jwtUtil) {
         this.userRepository = userRepository;
+        this.userProfileDetailsRepository = userProfileDetailsRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.modelMapper = modelMapper;
         this.jwtUtil = jwtUtil;
@@ -91,6 +96,21 @@ public class UserServiceImpl implements UserService {
 
         user.setUsername(newUsernameBindingModel.getUsername());
 
+        userRepository.save(user);
+    }
+
+    @Override
+    public void createUserProfileDetails(Long userId, UserProfileDetailsBindingModel userProfileDetailsBindingModel) {
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("User with id: %d not found!", userId)));
+
+        UserProfileDetails userProfileDetails = modelMapper.map(userProfileDetailsBindingModel, UserProfileDetails.class);
+        userProfileDetails.setUser(user);
+
+        user.setUserProfileDetails(userProfileDetails);
+
+        userProfileDetailsRepository.save(userProfileDetails);
         userRepository.save(user);
     }
 }

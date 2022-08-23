@@ -2,6 +2,7 @@ package deyki.FastTrade.service;
 
 import deyki.FastTrade.domain.bindingModels.NewUsernameBindingModel;
 import deyki.FastTrade.domain.bindingModels.UserBindingModel;
+import deyki.FastTrade.domain.bindingModels.UserProfileDetailsBindingModel;
 import deyki.FastTrade.domain.responseModels.SignInResponseModel;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -12,4 +13,6 @@ public interface UserService extends UserDetailsService {
     SignInResponseModel signIn(UserBindingModel userBindingModel);
 
     void changeUsernameById(Long userId, NewUsernameBindingModel newUsernameBindingModel);
+
+    void createUserProfileDetails(Long userId, UserProfileDetailsBindingModel userProfileDetailsBindingModel);
 }
