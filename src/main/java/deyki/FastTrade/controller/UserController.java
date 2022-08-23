@@ -1,7 +1,9 @@
 package deyki.FastTrade.controller;
 
-import deyki.FastTrade.domain.bindingModels.NewUsernameBindingModel;
-import deyki.FastTrade.domain.bindingModels.UserProfileDetailsBindingModel;
+import deyki.FastTrade.domain.bindingModels.user.NewEmailBindingModel;
+import deyki.FastTrade.domain.bindingModels.user.NewPhoneNumberBindingModel;
+import deyki.FastTrade.domain.bindingModels.user.NewUsernameBindingModel;
+import deyki.FastTrade.domain.bindingModels.user.UserProfileDetailsBindingModel;
 import deyki.FastTrade.domain.responseModels.UserResponseModel;
 import deyki.FastTrade.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +42,21 @@ public class UserController {
     public ResponseEntity<UserResponseModel> getUserInfo(@PathVariable Long userId) {
 
         return ResponseEntity.status(HttpStatus.OK).body(userService.getUserInfoById(userId));
+    }
+
+    @PutMapping("/updatePhoneNumber/{userId}")
+    public ResponseEntity<String> updateUserPhoneNumber(@PathVariable Long userId, @RequestBody NewPhoneNumberBindingModel newPhoneNumberBindingModel) {
+
+        userService.updateUserPhoneNumber(userId, newPhoneNumberBindingModel);
+
+        return ResponseEntity.status(HttpStatus.OK).body("Phone number updated successfully!");
+    }
+
+    @PutMapping("/updateEmail/{userId}")
+    public ResponseEntity<String> updateUserEmail(@PathVariable Long userId, @RequestBody NewEmailBindingModel newEmailBindingModel) {
+
+        userService.updateUserEmail(userId, newEmailBindingModel);
+
+        return ResponseEntity.status(HttpStatus.OK).body("Email updated successfully!");
     }
 }
