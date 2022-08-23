@@ -149,4 +149,19 @@ public class UserServiceImpl implements UserService {
 
         userRepository.save(user);
     }
+
+    @Override
+    public void updateUserNames(Long userId, NewUserNamesBindingModel newUserNamesBindingModel) {
+
+        User user = userRepository
+                .findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("User with id: %d not found!", userId)));
+
+        UserProfileDetails userProfileDetails = user.getUserProfileDetails();
+        userProfileDetails.setFirstName(newUserNamesBindingModel.getFirstName());
+        userProfileDetails.setMiddleName(newUserNamesBindingModel.getMiddleName());
+        userProfileDetails.setLastName(newUserNamesBindingModel.getLastName());
+
+        userRepository.save(user);
+    }
 }

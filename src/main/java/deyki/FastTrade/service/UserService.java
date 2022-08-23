@@ -20,4 +20,6 @@ public interface UserService extends UserDetailsService {
     void updateUserPhoneNumber(Long userId, NewPhoneNumberBindingModel newPhoneNumberBindingModel);
 
     void updateUserEmail(Long userId, NewEmailBindingModel newEmailBindingModel);
+
+    void updateUserNames(Long userId, NewUserNamesBindingModel newUserNamesBindingModel);
 }
