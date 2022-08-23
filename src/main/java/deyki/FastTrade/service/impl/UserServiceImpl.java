@@ -1,8 +1,6 @@
 package deyki.FastTrade.service.impl;
 
-import deyki.FastTrade.domain.bindingModels.NewUsernameBindingModel;
-import deyki.FastTrade.domain.bindingModels.UserBindingModel;
-import deyki.FastTrade.domain.bindingModels.UserProfileDetailsBindingModel;
+import deyki.FastTrade.domain.bindingModels.user.*;
 import deyki.FastTrade.domain.entity.User;
 import deyki.FastTrade.domain.entity.UserProfileDetails;
 import deyki.FastTrade.domain.responseModels.SignInResponseModel;
@@ -122,5 +120,33 @@ public class UserServiceImpl implements UserService {
                 .findById(userId)
                 .map(user -> modelMapper.map(user.getUserProfileDetails(), UserResponseModel.class))
                 .orElseThrow(() -> new EntityNotFoundException(String.format("User with id: %d not found!", userId)));
+    }
+
+    @Override
+    public void updateUserPhoneNumber(Long userId, NewPhoneNumberBindingModel newPhoneNumberBindingModel) {
+
+        User user = userRepository
+                .findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("User with id: %d not found!", userId)));
+
+        Integer newPhoneNumber = newPhoneNumberBindingModel.getPhoneNumber();
+
+        user.getUserProfileDetails().setPhoneNumber(newPhoneNumber);
+
+        userRepository.save(user);
+    }
+
+    @Override
+    public void updateUserEmail(Long userId, NewEmailBindingModel newEmailBindingModel) {
+
+        User user = userRepository
+                .findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("User with id: %d not found!", userId)));
+
+        String newEmail = newEmailBindingModel.getEmail();
+
+        user.getUserProfileDetails().setEmail(newEmail);
+
+        userRepository.save(user);
     }
 }
