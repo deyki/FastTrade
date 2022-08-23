@@ -2,6 +2,7 @@ package deyki.FastTrade.controller;
 
 import deyki.FastTrade.domain.bindingModels.NewUsernameBindingModel;
 import deyki.FastTrade.domain.bindingModels.UserProfileDetailsBindingModel;
+import deyki.FastTrade.domain.responseModels.UserResponseModel;
 import deyki.FastTrade.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,5 +34,11 @@ public class UserController {
         userService.createUserProfileDetails(userId, userProfileDetailsBindingModel);
 
         return ResponseEntity.status(HttpStatus.OK).body("Profile details successfully created!");
+    }
+
+    @GetMapping("/info/{userId}")
+    public ResponseEntity<UserResponseModel> getUserInfo(@PathVariable Long userId) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getUserInfoById(userId));
     }
 }
