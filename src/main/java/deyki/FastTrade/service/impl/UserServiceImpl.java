@@ -6,6 +6,7 @@ import deyki.FastTrade.domain.bindingModels.UserProfileDetailsBindingModel;
 import deyki.FastTrade.domain.entity.User;
 import deyki.FastTrade.domain.entity.UserProfileDetails;
 import deyki.FastTrade.domain.responseModels.SignInResponseModel;
+import deyki.FastTrade.domain.responseModels.UserResponseModel;
 import deyki.FastTrade.repository.UserProfileDetailsRepository;
 import deyki.FastTrade.repository.UserRepository;
 import deyki.FastTrade.security.JWTUtil;
@@ -112,5 +113,14 @@ public class UserServiceImpl implements UserService {
 
         userProfileDetailsRepository.save(userProfileDetails);
         userRepository.save(user);
+    }
+
+    @Override
+    public UserResponseModel getUserInfoById(Long userId) {
+
+        return userRepository
+                .findById(userId)
+                .map(user -> modelMapper.map(user.getUserProfileDetails(), UserResponseModel.class))
+                .orElseThrow(() -> new EntityNotFoundException(String.format("User with id: %d not found!", userId)));
     }
 }
