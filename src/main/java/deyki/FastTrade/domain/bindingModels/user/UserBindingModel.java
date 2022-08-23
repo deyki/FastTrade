@@ -1,4 +1,4 @@
-package deyki.FastTrade.domain.bindingModels;
+package deyki.FastTrade.domain.bindingModels.user;
 
 import lombok.Data;
 
