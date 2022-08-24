@@ -1,7 +1,7 @@
 package deyki.FastTrade.controller;
 
 import deyki.FastTrade.domain.bindingModels.user.UserBindingModel;
-import deyki.FastTrade.domain.responseModels.SignInResponseModel;
+import deyki.FastTrade.domain.responseModels.user.SignInResponseModel;
 import deyki.FastTrade.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
