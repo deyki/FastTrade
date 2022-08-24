@@ -1,8 +1,8 @@
 package deyki.FastTrade.service;
 
 import deyki.FastTrade.domain.bindingModels.user.*;
-import deyki.FastTrade.domain.responseModels.SignInResponseModel;
-import deyki.FastTrade.domain.responseModels.UserResponseModel;
+import deyki.FastTrade.domain.responseModels.user.SignInResponseModel;
+import deyki.FastTrade.domain.responseModels.user.UserResponseModel;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService extends UserDetailsService {
