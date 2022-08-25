@@ -90,4 +90,14 @@ public class BankAccountServiceImpl implements BankAccountService {
 
         return bankAccount.getBalance();
     }
+
+    @Override
+    public Float checkBalanceById(Long bankAccountId) {
+
+        BankAccount bankAccount = bankAccountRepository
+                .findById(bankAccountId)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Bank account with id: %d not found!", bankAccountId)));
+
+        return bankAccount.getBalance();
+    }
 }
