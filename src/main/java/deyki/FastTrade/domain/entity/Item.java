@@ -22,4 +22,11 @@ public class Item {
 
     @Column(name = "item_description", nullable = false)
     private String description;
+
+    @Column(name = "for_sale")
+    private Boolean forSale;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "userId")
+    private User userOwner;
 }

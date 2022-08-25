@@ -21,6 +21,12 @@ public class PaymentHistory {
     @Column(name = "item_price", nullable = false)
     private Float itemPrice;
 
+    @Column(name = "owner_username", nullable = false)
+    private String ownerUsername;
+
+    @Column(name = "buyer_username")
+    private String buyerUsername;
+
     @Column(name = "date")
     private Date date;
 }
