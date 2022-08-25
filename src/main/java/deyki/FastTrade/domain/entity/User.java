@@ -27,4 +27,8 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "bank_account_id", referencedColumnName = "bankAccountId")
     private BankAccount bankAccount;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "digital_wallet_id", referencedColumnName = "walletId")
+    private DigitalWallet digitalWallet;
 }
