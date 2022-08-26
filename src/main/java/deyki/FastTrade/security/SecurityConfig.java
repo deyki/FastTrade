@@ -33,6 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/api/user/**").hasRole("USER")
                 .antMatchers("/api/bankAccount/**").hasRole("USER")
+                .antMatchers("/api/digitalWallet/**").hasRole("USER")
                 .and()
                 .userDetailsService(userService)
                 .exceptionHandling()
