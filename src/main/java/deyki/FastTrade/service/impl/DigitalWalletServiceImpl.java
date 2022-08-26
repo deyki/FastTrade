@@ -1,8 +1,11 @@
 package deyki.FastTrade.service.impl;
 
+import deyki.FastTrade.domain.bindingModels.bankAccount.DepositBindingModel;
+import deyki.FastTrade.domain.entity.BankAccount;
 import deyki.FastTrade.domain.entity.DigitalWallet;
 import deyki.FastTrade.domain.entity.User;
 import deyki.FastTrade.domain.responseModels.digitalWallet.DigitalWalletResponseModel;
+import deyki.FastTrade.repository.BankAccountRepository;
 import deyki.FastTrade.repository.DigitalWalletRepository;
 import deyki.FastTrade.repository.UserRepository;
 import deyki.FastTrade.service.DigitalWalletService;
@@ -16,11 +19,13 @@ public class DigitalWalletServiceImpl implements DigitalWalletService {
 
     private final DigitalWalletRepository digitalWalletRepository;
     private final UserRepository userRepository;
+    private final BankAccountRepository bankAccountRepository;
 
     @Autowired
-    public DigitalWalletServiceImpl(DigitalWalletRepository digitalWalletRepository, UserRepository userRepository) {
+    public DigitalWalletServiceImpl(DigitalWalletRepository digitalWalletRepository, UserRepository userRepository, BankAccountRepository bankAccountRepository) {
         this.digitalWalletRepository = digitalWalletRepository;
         this.userRepository = userRepository;
+        this.bankAccountRepository = bankAccountRepository;
     }
 
     @Override
@@ -66,5 +71,32 @@ public class DigitalWalletServiceImpl implements DigitalWalletService {
         digitalWalletResponseModel.setUserOwner(digitalWallet.getUser().getUsername());
 
         return digitalWalletResponseModel;
+    }
+
+    @Override
+    public void depositMoneyFromBankAccount(DepositBindingModel depositBindingModel) throws Exception {
+
+        BankAccount bankAccount = bankAccountRepository
+                .findByIban(depositBindingModel.getIban())
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Bank account with iban: %s not found!", depositBindingModel.getIban())));
+
+        DigitalWallet digitalWallet = digitalWalletRepository
+                .findByUsername(bankAccount.getUser().getUsername())
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Digital wallet with username: %s not found!", bankAccount.getUser().getUsername())));
+
+        Float myBankAccountBalance = bankAccount.getBalance();
+
+        if (myBankAccountBalance < depositBindingModel.getAmount()) {
+            throw new Exception("Not enough balance in bank account!");
+        } else {
+            bankAccount.setBalance(myBankAccountBalance - depositBindingModel.getAmount());
+        }
+
+        Float newDigitalWalletBalance = digitalWallet.getBalance() + depositBindingModel.getAmount();
+
+        digitalWallet.setBalance(newDigitalWalletBalance);
+
+        digitalWalletRepository.save(digitalWallet);
+        bankAccountRepository.save(bankAccount);
     }
 }

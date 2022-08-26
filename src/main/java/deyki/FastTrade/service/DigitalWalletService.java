@@ -1,5 +1,6 @@
 package deyki.FastTrade.service;
 
+import deyki.FastTrade.domain.bindingModels.bankAccount.DepositBindingModel;
 import deyki.FastTrade.domain.responseModels.digitalWallet.DigitalWalletResponseModel;
 
 public interface DigitalWalletService {
@@ -9,4 +10,6 @@ public interface DigitalWalletService {
     DigitalWalletResponseModel getDigitalWalletById(Long digitalWalletId);
 
     DigitalWalletResponseModel getDigitalWalletByOwnerUsername(String username);
+
+    void depositMoneyFromBankAccount(DepositBindingModel depositBindingModel) throws Exception;
 }
