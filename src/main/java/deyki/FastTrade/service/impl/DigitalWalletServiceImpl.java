@@ -99,4 +99,14 @@ public class DigitalWalletServiceImpl implements DigitalWalletService {
         digitalWalletRepository.save(digitalWallet);
         bankAccountRepository.save(bankAccount);
     }
+
+    @Override
+    public Float checkDigitalWalletBalanceByUserId(Long userId) {
+
+        User user = userRepository
+                .findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("User with id: %d not found!", userId)));
+
+        return user.getDigitalWallet().getBalance();
+    }
 }

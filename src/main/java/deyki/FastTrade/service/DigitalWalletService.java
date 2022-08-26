@@ -12,4 +12,6 @@ public interface DigitalWalletService {
     DigitalWalletResponseModel getDigitalWalletByOwnerUsername(String username);
 
     void depositMoneyFromBankAccount(DepositBindingModel depositBindingModel) throws Exception;
+
+    Float checkDigitalWalletBalanceByUserId(Long userId);
 }

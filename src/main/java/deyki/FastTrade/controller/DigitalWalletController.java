@@ -46,4 +46,12 @@ public class DigitalWalletController {
 
         return ResponseEntity.status(HttpStatus.OK).body("Deposit is done!");
     }
+
+    @GetMapping("/checkBalance/{userId}")
+    public ResponseEntity<String> checkBalanceByUserId(@PathVariable Long userId) {
+
+        String message = String.format("Balance in your digital wallet is %f", digitalWalletService.checkDigitalWalletBalanceByUserId(userId));
+
+        return ResponseEntity.status(HttpStatus.OK).body(message);
+    }
 }
