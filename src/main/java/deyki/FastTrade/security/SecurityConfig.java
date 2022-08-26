@@ -34,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/user/**").hasRole("USER")
                 .antMatchers("/api/bankAccount/**").hasRole("USER")
                 .antMatchers("/api/digitalWallet/**").hasRole("USER")
+                .antMatchers("/api/item/**").hasRole("USER")
                 .and()
                 .userDetailsService(userService)
                 .exceptionHandling()
