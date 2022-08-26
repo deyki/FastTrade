@@ -16,5 +16,5 @@ public interface ItemService {
 
     List<ItemResponseModel> getSoldItems();
 
-    void buyItem(BuyItemBindingModel buyItemBindingModel);
+    void buyItem(BuyItemBindingModel buyItemBindingModel) throws Exception;
 }

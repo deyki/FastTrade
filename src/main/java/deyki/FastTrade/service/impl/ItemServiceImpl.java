@@ -88,7 +88,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void buyItem(BuyItemBindingModel buyItemBindingModel) {
+    public void buyItem(BuyItemBindingModel buyItemBindingModel) throws Exception {
 
         User user = userRepository
                 .findById(buyItemBindingModel.getItemId())
@@ -109,17 +109,19 @@ public class ItemServiceImpl implements ItemService {
             item.setForSale(false);
 
             itemRepository.save(item);
+
+            digitalWalletRepository.save(digitalWallet);
+
+            PaymentHistory paymentHistory = new PaymentHistory();
+            paymentHistory.setItemName(item.getName());
+            paymentHistory.setItemPrice(item.getPrice());
+            paymentHistory.setBuyerUsername(user.getUsername());
+            paymentHistory.setOwnerUsername(item.getUserOwner().getUsername());
+            paymentHistory.setDate(new Date());
+
+            paymentHistoryRepository.save(paymentHistory);
+        } else {
+            throw new Exception(String.format("Your digital wallet balance is not enough!"));
         }
-
-        digitalWalletRepository.save(digitalWallet);
-
-        PaymentHistory paymentHistory = new PaymentHistory();
-        paymentHistory.setItemName(item.getName());
-        paymentHistory.setItemPrice(item.getPrice());
-        paymentHistory.setBuyerUsername(user.getUsername());
-        paymentHistory.setOwnerUsername(item.getUserOwner().getUsername());
-        paymentHistory.setDate(new Date());
-
-        paymentHistoryRepository.save(paymentHistory);
     }
 }
