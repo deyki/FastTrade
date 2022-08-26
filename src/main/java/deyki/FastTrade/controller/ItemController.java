@@ -48,7 +48,7 @@ public class ItemController {
     }
 
     @PostMapping("/buy")
-    public ResponseEntity<String> buyItem(@RequestBody BuyItemBindingModel buyItemBindingModel) {
+    public ResponseEntity<String> buyItem(@RequestBody BuyItemBindingModel buyItemBindingModel) throws Exception {
 
         itemService.buyItem(buyItemBindingModel);
 
