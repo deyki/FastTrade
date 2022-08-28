@@ -1,4 +1,7 @@
 # Info
 
-* FastTrade is web application which will allow users to trade different stuff online.
+* Tech-stack: Java, Spring-boot, Spring-security, Spring-data-jpa, PostgreSQL.
+
+* FastTrade is web application which allow users to trade items.
+
 
