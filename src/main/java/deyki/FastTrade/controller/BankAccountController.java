@@ -42,7 +42,7 @@ public class BankAccountController {
         return ResponseEntity.status(HttpStatus.OK).body("Deposit successfully done!");
     }
 
-    @GetMapping("/balance/{username}")
+    @GetMapping("/getBalanceByUsername/{username}")
     public ResponseEntity<String> checkBankAccountBalance(@PathVariable String username) {
 
         String message = String.format("Your bank account balance is %f", bankAccountService.checkBalanceByUsername(username));
@@ -50,7 +50,7 @@ public class BankAccountController {
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 
-    @GetMapping("/balance/{bankAccountId}")
+    @GetMapping("/getBalanceById/{bankAccountId}")
     public ResponseEntity<String> checkBankAccountBalanceById(@PathVariable Long bankAccountId) {
 
         String message = String.format("Balance of bank account with id %d is %f", bankAccountId, bankAccountService.checkBalanceById(bankAccountId));
