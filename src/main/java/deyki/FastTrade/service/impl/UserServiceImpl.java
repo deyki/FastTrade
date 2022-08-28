@@ -21,6 +21,7 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.Collections;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -120,6 +121,24 @@ public class UserServiceImpl implements UserService {
                 .findById(userId)
                 .map(user -> modelMapper.map(user.getUserProfileDetails(), UserResponseModel.class))
                 .orElseThrow(() -> new EntityNotFoundException(String.format("User with id: %d not found!", userId)));
+    }
+
+    @Override
+    public UserResponseModel getUserInfoByEmail(String email) {
+
+        return userRepository
+                .findByEmail(email)
+                .map(user -> modelMapper.map(user, UserResponseModel.class))
+                .orElseThrow(() -> new EntityNotFoundException(String.format("User with email address: %s not found!", email)));
+    }
+
+    @Override
+    public UserResponseModel getUserInfoByPhoneNumber(Integer phoneNumber) {
+
+        return userRepository
+                .findByPhoneNumber(phoneNumber)
+                .map(user -> modelMapper.map(user, UserResponseModel.class))
+                .orElseThrow(() -> new EntityNotFoundException(String.format("User with phone number: %d not found!", phoneNumber)));
     }
 
     @Override

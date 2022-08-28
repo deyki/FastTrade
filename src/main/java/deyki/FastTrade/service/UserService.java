@@ -17,6 +17,10 @@ public interface UserService extends UserDetailsService {
 
     UserResponseModel getUserInfoById(Long userId);
 
+    UserResponseModel getUserInfoByEmail(String email);
+
+    UserResponseModel getUserInfoByPhoneNumber(Integer phoneNumber);
+
     void updateUserPhoneNumber(Long userId, NewPhoneNumberBindingModel newPhoneNumberBindingModel);
 
     void updateUserEmail(Long userId, NewEmailBindingModel newEmailBindingModel);
