@@ -121,7 +121,7 @@ public class ItemServiceImpl implements ItemService {
 
             paymentHistoryRepository.save(paymentHistory);
         } else {
-            throw new Exception(String.format("Your digital wallet balance is not enough!"));
+            throw new Exception("Your digital wallet balance is not enough!");
         }
     }
 }
