@@ -90,14 +90,14 @@ public class DigitalWalletServiceImpl implements DigitalWalletService {
             throw new Exception("Not enough balance in bank account!");
         } else {
             bankAccount.setBalance(myBankAccountBalance - depositBindingModel.getAmount());
+
+            Float newDigitalWalletBalance = digitalWallet.getBalance() + depositBindingModel.getAmount();
+
+            digitalWallet.setBalance(newDigitalWalletBalance);
+
+            digitalWalletRepository.save(digitalWallet);
+            bankAccountRepository.save(bankAccount);
         }
-
-        Float newDigitalWalletBalance = digitalWallet.getBalance() + depositBindingModel.getAmount();
-
-        digitalWallet.setBalance(newDigitalWalletBalance);
-
-        digitalWalletRepository.save(digitalWallet);
-        bankAccountRepository.save(bankAccount);
     }
 
     @Override
