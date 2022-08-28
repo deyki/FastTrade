@@ -128,7 +128,7 @@ public class UserServiceImpl implements UserService {
 
         return userRepository
                 .findByEmail(email)
-                .map(user -> modelMapper.map(user, UserResponseModel.class))
+                .map(user -> modelMapper.map(user.getUserProfileDetails(), UserResponseModel.class))
                 .orElseThrow(() -> new EntityNotFoundException(String.format("User with email address: %s not found!", email)));
     }
 
@@ -137,7 +137,7 @@ public class UserServiceImpl implements UserService {
 
         return userRepository
                 .findByPhoneNumber(phoneNumber)
-                .map(user -> modelMapper.map(user, UserResponseModel.class))
+                .map(user -> modelMapper.map(user.getUserProfileDetails(), UserResponseModel.class))
                 .orElseThrow(() -> new EntityNotFoundException(String.format("User with phone number: %d not found!", phoneNumber)));
     }
 
