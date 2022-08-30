@@ -54,4 +54,12 @@ public class DigitalWalletController {
 
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
+
+    @GetMapping("/checkBalanceByUserUsername/{username}")
+    public ResponseEntity<String> checkBalanceByUserUsername(@PathVariable String username) {
+
+        String message = String.format("Balance in digital wallet with owner username: %s is: %f", username, digitalWalletService.checkDigitalWalletBalanceByUserUsername(username));
+
+        return ResponseEntity.status(HttpStatus.OK).body(message);
+    }
 }
