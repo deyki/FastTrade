@@ -3,6 +3,7 @@ package deyki.FastTrade.controller;
 import deyki.FastTrade.domain.responseModels.paymentHistory.PaymentHistoryResponseModel;
 import deyki.FastTrade.service.impl.PaymentHistoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,12 +26,12 @@ public class PaymentHistoryController {
     @GetMapping("/getPurchases/{username}")
     public ResponseEntity<List<PaymentHistoryResponseModel>> getPurchases(@PathVariable String username) {
 
-        return ResponseEntity.ok().body(paymentHistoryService.getMyPurchases(username));
+        return ResponseEntity.status(HttpStatus.OK).body(paymentHistoryService.getMyPurchases(username));
     }
 
     @GetMapping("/getSales/{username}")
     public ResponseEntity<List<PaymentHistoryResponseModel>> getSales(@PathVariable String username) {
 
-        return ResponseEntity.ok().body(paymentHistoryService.getMySales(username));
+        return ResponseEntity.status(HttpStatus.OK).body(paymentHistoryService.getMySales(username));
     }
 }
