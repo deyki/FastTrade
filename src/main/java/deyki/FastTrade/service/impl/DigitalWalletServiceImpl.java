@@ -63,7 +63,7 @@ public class DigitalWalletServiceImpl implements DigitalWalletService {
     public DigitalWalletResponseModel getDigitalWalletByOwnerUsername(String username) {
 
         DigitalWallet digitalWallet = digitalWalletRepository
-                .findByUsername(username)
+                .findByUserUsername(username)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Digital wallet with owner username: %s not found!", username)));
 
         DigitalWalletResponseModel digitalWalletResponseModel = new DigitalWalletResponseModel();
@@ -81,7 +81,7 @@ public class DigitalWalletServiceImpl implements DigitalWalletService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Bank account with iban: %s not found!", depositBindingModel.getIban())));
 
         DigitalWallet digitalWallet = digitalWalletRepository
-                .findByUsername(bankAccount.getUser().getUsername())
+                .findByUserUsername(bankAccount.getUser().getUsername())
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Digital wallet with username: %s not found!", bankAccount.getUser().getUsername())));
 
         Float myBankAccountBalance = bankAccount.getBalance();
@@ -103,10 +103,20 @@ public class DigitalWalletServiceImpl implements DigitalWalletService {
     @Override
     public Float checkDigitalWalletBalanceByUserId(Long userId) {
 
-        User user = userRepository
-                .findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("User with id: %d not found!", userId)));
+        DigitalWallet digitalWallet = digitalWalletRepository
+                .findByUserId(userId)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Digital wallet with owner id: %d not found!", userId)));
 
-        return user.getDigitalWallet().getBalance();
+        return digitalWallet.getBalance();
+    }
+
+    @Override
+    public Float checkDigitalWalletBalanceByUserUsername(String username) {
+
+        DigitalWallet digitalWallet = digitalWalletRepository
+                .findByUserUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Digital wallet with owner username: %s not found!", username)));
+
+        return digitalWallet.getBalance();
     }
 }
