@@ -42,6 +42,14 @@ public class BankAccountController {
         return ResponseEntity.status(HttpStatus.OK).body("Deposit successfully done!");
     }
 
+    @GetMapping("/getBalanceByIban")
+    public ResponseEntity<String> getBalanceByIban(@RequestBody BankAccountBindingModel bankAccountBindingModel) {
+
+        String message = String.format("Your bank account balance is %f", bankAccountService.checkBalanceByIban(bankAccountBindingModel));
+
+        return ResponseEntity.status(HttpStatus.OK).body(message);
+    }
+
     @GetMapping("/getBalanceByUsername/{username}")
     public ResponseEntity<String> checkBankAccountBalance(@PathVariable String username) {
 
@@ -54,6 +62,14 @@ public class BankAccountController {
     public ResponseEntity<String> checkBankAccountBalanceById(@PathVariable Long bankAccountId) {
 
         String message = String.format("Balance of bank account with id %d is %f", bankAccountId, bankAccountService.checkBalanceById(bankAccountId));
+
+        return ResponseEntity.status(HttpStatus.OK).body(message);
+    }
+
+    @GetMapping("/getIbanByUsername/{username}")
+    public ResponseEntity<String> getIbanByUsername(@PathVariable String username) {
+
+        String message = String.format("Your iban is:  %s", bankAccountService.getIbanByUserUsername(username));
 
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
