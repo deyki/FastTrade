@@ -82,11 +82,21 @@ public class BankAccountServiceImpl implements BankAccountService {
     }
 
     @Override
+    public Float checkBalanceByIban(BankAccountBindingModel bankAccountBindingModel) {
+
+        BankAccount bankAccount = bankAccountRepository
+                .findByIban(bankAccountBindingModel.getIban())
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Bank account with iban: %s not found!", bankAccountBindingModel.getIban())));
+
+        return bankAccount.getBalance();
+    }
+
+    @Override
     public Float checkBalanceByUsername(String username) {
 
         BankAccount bankAccount = bankAccountRepository
                 .findByUsername(username)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("Bank account with username: %s not found!", username)));
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Bank account with owner username: %s not found!", username)));
 
         return bankAccount.getBalance();
     }
@@ -99,5 +109,15 @@ public class BankAccountServiceImpl implements BankAccountService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Bank account with id: %d not found!", bankAccountId)));
 
         return bankAccount.getBalance();
+    }
+
+    @Override
+    public String getIbanByUserUsername(String username) {
+
+        BankAccount bankAccount = bankAccountRepository
+                .findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Bank account with owner username: %s not found!", username)));
+
+        return bankAccount.getIban();
     }
 }

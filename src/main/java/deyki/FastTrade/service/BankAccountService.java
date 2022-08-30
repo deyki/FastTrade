@@ -12,7 +12,11 @@ public interface BankAccountService {
 
     void deposit(DepositBindingModel depositBindingModel);
 
+    Float checkBalanceByIban(BankAccountBindingModel bankAccountBindingModel);
+
     Float checkBalanceByUsername(String username);
 
     Float checkBalanceById(Long bankAccountId);
+
+    String getIbanByUserUsername(String username);
 }
