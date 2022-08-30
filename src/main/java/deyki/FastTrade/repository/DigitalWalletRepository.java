@@ -11,6 +11,9 @@ import java.util.Optional;
 @Repository
 public interface DigitalWalletRepository extends JpaRepository<DigitalWallet, Long> {
 
+    @Query("SELECT d FROM DigitalWallet d WHERE d.user.userId = ?1")
+    Optional<DigitalWallet> findByUserId(@Param("userId") Long userId);
+
     @Query("SELECT d FROM DigitalWallet d WHERE d.user.username = ?1")
-    Optional<DigitalWallet> findByUsername(@Param("username") String username);
+    Optional<DigitalWallet> findByUserUsername(@Param("username") String username);
 }
