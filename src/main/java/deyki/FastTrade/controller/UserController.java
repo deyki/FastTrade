@@ -27,6 +27,14 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body("Username changed successfully!");
     }
 
+    @PutMapping("/changePassword/{userId}")
+    public ResponseEntity<String> changePassword(@PathVariable Long userId, @RequestBody NewPasswordBindingModel newPasswordBindingModel) throws Exception {
+
+        userService.changePasswordById(userId, newPasswordBindingModel);
+
+        return ResponseEntity.status(HttpStatus.OK).body("Password changed successfully!");
+    }
+
     @PostMapping("/createProfileDetails/{userId}")
     public ResponseEntity<String> createProfileDetails(@PathVariable Long userId, @RequestBody UserProfileDetailsBindingModel userProfileDetailsBindingModel) {
 
