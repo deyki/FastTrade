@@ -13,6 +13,8 @@ public interface UserService extends UserDetailsService {
 
     void changeUsernameById(Long userId, NewUsernameBindingModel newUsernameBindingModel);
 
+    void changePasswordById(Long userId, NewPasswordBindingModel newPasswordBindingModel) throws Exception;
+
     void createUserProfileDetails(Long userId, UserProfileDetailsBindingModel userProfileDetailsBindingModel);
 
     UserResponseModel getUserInfoById(Long userId);

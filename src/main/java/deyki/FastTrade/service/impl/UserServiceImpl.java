@@ -100,6 +100,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void changePasswordById(Long userId, NewPasswordBindingModel newPasswordBindingModel) throws Exception {
+
+        User user = userRepository
+                .findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("User with id: %d not found!", userId)));
+
+        if (user.getPassword().equals(newPasswordBindingModel.getOldPassword())) {
+
+            user.setPassword(bCryptPasswordEncoder.encode(newPasswordBindingModel.getNewPassword()));
+        } else {
+
+            throw new Exception("Incorrect old password!");
+        }
+    }
+
+    @Override
     public void createUserProfileDetails(Long userId, UserProfileDetailsBindingModel userProfileDetailsBindingModel) {
 
         User user = userRepository.findById(userId)
