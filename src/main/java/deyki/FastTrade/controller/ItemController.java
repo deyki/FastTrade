@@ -55,4 +55,12 @@ public class ItemController {
 
         return ResponseEntity.status(HttpStatus.OK).body("Item bought successfully!");
     }
+
+    @PutMapping("/updateStatus/{itemId}")
+    public ResponseEntity<String> updateStatusById(@PathVariable Long itemId)  {
+
+        itemService.changeItemStatusById(itemId);
+
+        return ResponseEntity.status(HttpStatus.OK).body("Item status changed successfully!");
+    }
 }

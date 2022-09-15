@@ -124,4 +124,16 @@ public class ItemServiceImpl implements ItemService {
             throw new Exception("Your digital wallet balance is not enough!");
         }
     }
+
+    @Override
+    public void changeItemStatusById(Long itemId) {
+
+        Item item = itemRepository
+                .findById(itemId)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Item with id: %d not found!", itemId)));
+
+        item.setForSale(!item.getForSale().equals(true));
+
+        itemRepository.save(item);
+    }
 }
