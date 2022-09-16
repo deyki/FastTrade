@@ -109,6 +109,8 @@ public class UserServiceImpl implements UserService {
         if (user.getPassword().equals(newPasswordBindingModel.getOldPassword())) {
 
             user.setPassword(bCryptPasswordEncoder.encode(newPasswordBindingModel.getNewPassword()));
+
+            userRepository.save(user);
         } else {
 
             throw new Exception("Incorrect old password!");
